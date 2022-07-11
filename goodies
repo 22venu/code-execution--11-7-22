@@ -1,0 +1,102 @@
+
+import java.io.*;
+import java.util.*;
+public class Main1 {
+  public static void main(String[] args) throws Exception {
+    BufferedReader b=new BufferedReader(new FileReader("D:\\input.txt"));
+    int numOfEmps = Integer.parseInt(b.readLine().split(": ")[1]);
+    int[] prices = new int[10];
+    String [] product = new String[10];
+    
+    
+    for(int i=1; i<=3; i++){
+        b.readLine();
+    }
+    
+    for(int i=0; i<10; i++){
+        String line [] = b.readLine().split(": ");
+        prices[i] = Integer.parseInt(line[1]);
+        product[i] = line[0];
+        
+    }
+    // Arrays.sort(prices);
+    for(int i = 0 ; i < prices.length - 1; i++) {
+        for(int j = i + 1; j < prices.length; j++) {
+            if(prices[i] < prices[j]) {
+                int temp = prices[i];
+                String tempName = product[i];
+                prices[i] = prices[j];
+                prices[j] = temp;
+                product[i] = product[j];
+                product[j] = tempName;
+        }
+    }
+    }
+    long min = 1000000000;
+    int index = 0;
+    for(int i = 0; i < prices.length - numOfEmps + 1; i++) {
+        if(prices[i] - prices[i+numOfEmps-1] < min) {
+            min = prices[i] - prices[i+numOfEmps-1];
+            index = i;
+        }
+    }
+    System.out.println("Here the goodies that are selected for distribution are:");
+    for(int i = index; i < index + numOfEmps;i++)  {
+        System.out.println(product[i] + ": " + prices[i]);
+    }
+    System.out.println("And the difference between the chosen goodie with highest price and the lowest price is  " + (prices[index] - prices[index+numOfEmps-1]));
+    }
+}
+
+
+
+
+
+// ------------input------------------
+// Number of employees: 4
+
+// Goodies and Prices:
+
+// Fitbit Plus: 7980
+// IPods: 22349
+// MI Band: 999
+// Cult Pass: 2799
+// Macbook Pro: 229900
+// Digital Camera: 11101
+// Alexa: 9999
+// Sandwich Toaster: 2195
+// Microwave Oven: 9800
+// Scale: 4999 
+
+//-------------output-----------------
+
+// Here the goodies that are selected for distribution are:
+// Digital Camera: 11101
+// Alexa: 9999
+// Microwave Oven: 9800
+// Fitbit Plus: 7980
+// And the difference between the chosen goodie with highest price and the lowest price is  3121
+
+
+//-------------test Case 2----------
+//input------------------------
+// Number of employees: 2
+
+// Goodies and Prices:
+
+// Fitbit Plus: 7980
+// IPods: 22349
+// MI Band: 999
+// Cult Pass: 2799
+// Macbook Pro: 229900
+// Digital Camera: 11101
+// Alexa: 9999
+// Sandwich Toaster: 2195
+// Microwave Oven: 9800
+// Scale: 4999 
+
+//output---------------
+// Here the goodies that are selected for distribution are:
+// Alexa: 9999
+// Microwave Oven: 9800
+// And the difference between the chosen goodie with highest price and the lowest price is  199
